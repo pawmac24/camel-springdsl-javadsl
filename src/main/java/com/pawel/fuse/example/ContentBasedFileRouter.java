@@ -13,6 +13,7 @@ public class ContentBasedFileRouter extends SpringRouteBuilder {
     public void configure() throws Exception {
 
         from("file:src/data?noop=true")
+            .process(new MyProcessor())
             .choice()
                 .when(xpath("/person/city = 'London'"))
                     .log("UK messesage")
