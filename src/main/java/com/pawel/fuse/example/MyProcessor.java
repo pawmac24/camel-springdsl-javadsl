@@ -3,6 +3,9 @@ package com.pawel.fuse.example;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by pmackiewicz on 2016-08-19.
  */
@@ -13,14 +16,19 @@ public class MyProcessor implements Processor {
 
         System.out.println("Some processing MessageId : " + exchange.getIn().getMessageId());
 
-        System.out.println("Some processing CamelFileName : " + exchange.getIn().getHeader(Exchange.FILE_NAME) );
-        System.out.println("Some processing CamelFileLength : " + exchange.getIn().getHeader(Exchange.FILE_LENGTH));
-        System.out.println("Some processing CamelFileAbsolutePath : " +  exchange.getIn().getHeader("CamelFileAbsolutePath"));
-        System.out.println("Some processing CamelFilePath : " + exchange.getIn().getHeader(Exchange.FILE_PATH));
-        System.out.println("Some processing CamelFileContentType : " + exchange.getIn().getHeader(Exchange.FILE_CONTENT_TYPE));
-        System.out.println("Some processing CamelFileLastModified : " + exchange.getIn().getHeader(Exchange.FILE_LAST_MODIFIED));
+        System.out.println("Some headers inside In Message");
+        System.out.println("Some processing CamelHttpUri : " + exchange.getIn().getHeader(Exchange.HTTP_URI));
+        System.out.println("Some processing operationName : " + exchange.getIn().getHeader("operationName"));
+        System.out.println("Some processing Host : " + exchange.getIn().getHeader("Host"));
+        System.out.println("Some processing CamelHttpMethod : " + exchange.getIn().getHeader(Exchange.HTTP_METHOD));
+        System.out.println("Some processing Content-Type : " + exchange.getIn().getHeader(Exchange.CONTENT_TYPE));
 
-        System.out.println("Message In in Body " + exchange.getIn().getBody());
+        List<Object> myBody = (List<Object>)exchange.getIn().getBody();
+        for (Object myItem : myBody) {
+            System.out.println("myItem inside In Body = " + myItem);
+        }
+
+        System.out.println("Body inside In Message" + exchange.getIn().getBody());
 
     }
 }
