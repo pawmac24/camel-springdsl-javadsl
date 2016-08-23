@@ -13,3 +13,6 @@ For more help see the Apache Camel documentation
 
     http://camel.apache.org/
 
+Restful producer endpoint:
+http://localhost:9000/cxf/status/status/custId/A12345
+http://localhost:9000/cxf/status/status/restcancel/B345678
