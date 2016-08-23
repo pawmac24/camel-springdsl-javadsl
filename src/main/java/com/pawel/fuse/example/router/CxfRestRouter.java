@@ -1,4 +1,4 @@
-package com.pawel.fuse.example;
+package com.pawel.fuse.example.router;
 
 import org.apache.camel.spring.SpringRouteBuilder;
 import org.springframework.stereotype.Component;
