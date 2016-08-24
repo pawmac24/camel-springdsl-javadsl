@@ -6,10 +6,9 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <bean id="simpleFileRouterBuilder" class="com.pawel.fuse.example.router.SimpleFileRouter"/>
-
-    <camelContext id="fileContext" xmlns="http://camel.apache.org/schema/spring">
-        <routeBuilder ref="simpleFileRouterBuilder" />
-    </camelContext>
+    <!-- override the existing properties from rider-camel-prod.xml with this one for the test environment -->
+    <bean id="properties" class="org.apache.camel.component.properties.PropertiesComponent">
+        <property name="location" value="classpath:file-test.properties"/>
+    </bean>
 
 </beans>

@@ -1,10 +1,9 @@
-package com.pawel.fuse.example;
+package com.pawel.fuse.example.processor;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by pmackiewicz on 2016-08-19.

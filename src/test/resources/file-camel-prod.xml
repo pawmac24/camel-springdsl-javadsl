@@ -7,6 +7,9 @@
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <bean id="simpleFileRouterBuilder" class="com.pawel.fuse.example.router.SimpleFileRouter"/>
+    <bean id="properties" class="org.apache.camel.component.properties.PropertiesComponent">
+        <property name="location" value="classpath:file-prod.properties"/>
+    </bean>
 
     <camelContext id="fileContext" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="simpleFileRouterBuilder" />

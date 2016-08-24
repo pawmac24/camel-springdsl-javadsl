@@ -20,10 +20,13 @@
                   address="http://localhost:9000/cxf/status"
                   serviceClass="com.pawel.fuse.example.StatusService"/>
 
-    <context:component-scan base-package="com.pawel.fuse.example"/>
+    <bean id="soapRouterBuilder" class="com.pawel.fuse.example.router.CxfSoapRouter"/>
+    <bean id="restRouterBuilder" class="com.pawel.fuse.example.router.CxfRestRouter"/>
+    <bean id="claimProcessor" class="com.pawel.fuse.example.ClaimProcessor"/>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <contextScan/>
+        <routeBuilder ref="soapRouterBuilder" />
+        <routeBuilder ref="restRouterBuilder" />
     </camelContext>
 
 </beans>
