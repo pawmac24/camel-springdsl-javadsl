@@ -34,6 +34,20 @@ public class SimpleMockTest extends CamelTestSupport {
     }
 
     @Test
+    public void testMockFooInAnyOrder() throws Exception {
+        MockEndpoint resultEndpoint = getMockEndpoint("mock:foo");
+
+        resultEndpoint.expectedMessageCount(2);
+        resultEndpoint.expectedBodiesReceivedInAnyOrder("Hate World","Hello World");
+
+        template.sendBody("direct:start", "Hello World");
+        template.sendBody("direct:start", "Hate World");
+
+        // now lets assert that the mock:foo endpoint received 2 messages
+        resultEndpoint.assertIsSatisfied();
+    }
+
+    @Test
     public void testMockFoo2() throws Exception {
         MockEndpoint resultEndpoint = getMockEndpoint("mock:foo2");
 
