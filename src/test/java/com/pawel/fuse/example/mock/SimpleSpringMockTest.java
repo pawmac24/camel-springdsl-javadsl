@@ -39,6 +39,36 @@ public class SimpleSpringMockTest extends CamelSpringTestSupport {
     }
 
     @Test
+    public void testIfWorldIsInsideMockFoo() throws Exception {
+        MockEndpoint resultEndpoint = getMockEndpoint("mock:foo");
+
+        resultEndpoint.expectedMessageCount(3);
+        resultEndpoint.message(0).body().contains("World");
+        resultEndpoint.message(1).body().contains("World");
+        resultEndpoint.message(2).body().contains("World");
+
+        template.sendBody("direct:start", "Hello World");
+        template.sendBody("direct:start", "Hate World");
+        template.sendBody("direct:start", "Funny World");
+
+        assertMockEndpointsSatisfied();
+    }
+
+    @Test
+    public void testIfWorldIsInsideMockFooInSimplerWay() throws Exception {
+        MockEndpoint resultEndpoint = getMockEndpoint("mock:foo");
+
+        resultEndpoint.expectedMessageCount(3);
+        resultEndpoint.allMessages().body().contains("World");
+
+        template.sendBody("direct:start", "Hello World");
+        template.sendBody("direct:start", "Hate World");
+        template.sendBody("direct:start", "Funny World");
+
+        assertMockEndpointsSatisfied();
+    }
+
+    @Test
     public void testMockFooInAnyOrder() throws Exception {
         MockEndpoint resultEndpoint = getMockEndpoint("mock:foo");
 
