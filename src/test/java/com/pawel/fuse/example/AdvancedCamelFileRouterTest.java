@@ -50,6 +50,7 @@ public class AdvancedCamelFileRouterTest extends CamelSpringTestSupport {
         // test the file was moved
         File target = new File(outboxDir + "/hello.txt");
         assertTrue("File should have been moved", target.exists());
+        assertEquals("hello.txt", target.getName());
 
         // test that its content is correct as well
         String content = context.getTypeConverter().convertTo(String.class, target);
