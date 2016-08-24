@@ -8,6 +8,8 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class SimpleSpringMockTest extends CamelSpringTestSupport {
 
@@ -108,4 +110,30 @@ public class SimpleSpringMockTest extends CamelSpringTestSupport {
         assertTrue(exchangeList.get(1).getIn().getBody(String.class).contains("Bye"));
     }
 
+    @Test
+    public void testExchangeInMockFoo2() throws Exception {
+        MockEndpoint resultEndpoint = getMockEndpoint("mock:foo2");
+
+        resultEndpoint.expectedMessageCount(2);
+        resultEndpoint.expectedBodiesReceived("Bye World", "Bye World");
+        resultEndpoint.allMessages().body().contains("Bye World");
+        resultEndpoint.allMessages().headers().isNotNull();
+
+        template.sendBody("direct:start2", "Hello World");
+        template.sendBody("direct:start2", "Hate World");
+
+        // now lets assert that the mock:foo2 endpoint received 2 messages
+        resultEndpoint.assertIsSatisfied();
+
+        List<Exchange> exchangeList = resultEndpoint.getExchanges();
+        assertEquals(2, exchangeList.size());
+
+        assertTrue(exchangeList.get(0).getIn().getHeaders().containsKey("breadcrumbId"));
+        assertTrue(exchangeList.get(1).getIn().getHeaders().containsKey("breadcrumbId"));
+        assertEquals(1, exchangeList.get(0).getIn().getHeaders().size());
+        assertEquals(1, exchangeList.get(1).getIn().getHeaders().size());
+
+        assertNull(exchangeList.get(0).getOut().getBody());
+        assertNull(exchangeList.get(1).getOut().getBody());
+    }
 }
