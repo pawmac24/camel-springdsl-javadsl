@@ -8,8 +8,6 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class SimpleSpringMockTest extends CamelSpringTestSupport {
 
@@ -20,19 +18,19 @@ public class SimpleSpringMockTest extends CamelSpringTestSupport {
 
     @Test
     public void testMockFoo() throws Exception {
-        MockEndpoint resultEndpoint = getMockEndpoint("mock:foo");
+        MockEndpoint mockEndPoint = getMockEndpoint("mock:foo");
 
-        resultEndpoint.expectedMessageCount(3);
-        resultEndpoint.expectedBodiesReceived("Hello World", "Hate World", "Funny World");
+        mockEndPoint.expectedMessageCount(3);
+        mockEndPoint.expectedBodiesReceived("Hello World", "Hate World", "Funny World");
 
         template.sendBody("direct:start", "Hello World");
         template.sendBody("direct:start", "Hate World");
         template.sendBody("direct:start", "Funny World");
 
         // now lets assert that the mock:foo endpoint received 2 messages
-        resultEndpoint.assertIsSatisfied();
+        mockEndPoint.assertIsSatisfied();
 
-        List<Exchange> exchangeList = resultEndpoint.getExchanges();
+        List<Exchange> exchangeList = mockEndPoint.getExchanges();
         assertEquals(3, exchangeList.size());
 
         assertTrue(exchangeList.get(0).getIn().getBody(String.class).contains("World"));
@@ -42,12 +40,12 @@ public class SimpleSpringMockTest extends CamelSpringTestSupport {
 
     @Test
     public void testIfWorldIsInsideMockFoo() throws Exception {
-        MockEndpoint resultEndpoint = getMockEndpoint("mock:foo");
+        MockEndpoint mockEndPoint = getMockEndpoint("mock:foo");
 
-        resultEndpoint.expectedMessageCount(3);
-        resultEndpoint.message(0).body().contains("World");
-        resultEndpoint.message(1).body().contains("World");
-        resultEndpoint.message(2).body().contains("World");
+        mockEndPoint.expectedMessageCount(3);
+        mockEndPoint.message(0).body().contains("World");
+        mockEndPoint.message(1).body().contains("World");
+        mockEndPoint.message(2).body().contains("World");
 
         template.sendBody("direct:start", "Hello World");
         template.sendBody("direct:start", "Hate World");
@@ -58,10 +56,10 @@ public class SimpleSpringMockTest extends CamelSpringTestSupport {
 
     @Test
     public void testIfWorldIsInsideMockFooInSimplerWay() throws Exception {
-        MockEndpoint resultEndpoint = getMockEndpoint("mock:foo");
+        MockEndpoint mockEndPoint = getMockEndpoint("mock:foo");
 
-        resultEndpoint.expectedMessageCount(3);
-        resultEndpoint.allMessages().body().contains("World");
+        mockEndPoint.expectedMessageCount(3);
+        mockEndPoint.allMessages().body().contains("World");
 
         template.sendBody("direct:start", "Hello World");
         template.sendBody("direct:start", "Hate World");
@@ -72,18 +70,18 @@ public class SimpleSpringMockTest extends CamelSpringTestSupport {
 
     @Test
     public void testMockFooInAnyOrder() throws Exception {
-        MockEndpoint resultEndpoint = getMockEndpoint("mock:foo");
+        MockEndpoint mockEndPoint = getMockEndpoint("mock:foo");
 
-        resultEndpoint.expectedMessageCount(2);
-        resultEndpoint.expectedBodiesReceivedInAnyOrder("Hate World","Hello World");
+        mockEndPoint.expectedMessageCount(2);
+        mockEndPoint.expectedBodiesReceivedInAnyOrder("Hate World","Hello World");
 
         template.sendBody("direct:start", "Hello World");
         template.sendBody("direct:start", "Hate World");
 
         // now lets assert that the mock:foo endpoint received 2 messages
-        resultEndpoint.assertIsSatisfied();
+        mockEndPoint.assertIsSatisfied();
 
-        List<Exchange> exchangeList = resultEndpoint.getExchanges();
+        List<Exchange> exchangeList = mockEndPoint.getExchanges();
         assertEquals(2, exchangeList.size());
 
         assertTrue(exchangeList.get(0).getIn().getBody(String.class).contains("Hello"));
@@ -92,18 +90,18 @@ public class SimpleSpringMockTest extends CamelSpringTestSupport {
 
     @Test
     public void testMockFoo2() throws Exception {
-        MockEndpoint resultEndpoint = getMockEndpoint("mock:foo2");
+        MockEndpoint mockEndPoint = getMockEndpoint("mock:foo2");
 
-        resultEndpoint.expectedMessageCount(2);
-        resultEndpoint.expectedBodiesReceived("Bye World", "Bye World");
+        mockEndPoint.expectedMessageCount(2);
+        mockEndPoint.expectedBodiesReceived("Bye World", "Bye World");
 
         template.sendBody("direct:start2", "Hello World");
         template.sendBody("direct:start2", "Hate World");
 
         // now lets assert that the mock:foo2 endpoint received 2 messages
-        resultEndpoint.assertIsSatisfied();
+        mockEndPoint.assertIsSatisfied();
 
-        List<Exchange> exchangeList = resultEndpoint.getExchanges();
+        List<Exchange> exchangeList = mockEndPoint.getExchanges();
         assertEquals(2, exchangeList.size());
 
         assertTrue(exchangeList.get(0).getIn().getBody(String.class).contains("Bye"));
@@ -112,20 +110,20 @@ public class SimpleSpringMockTest extends CamelSpringTestSupport {
 
     @Test
     public void testExchangeInMockFoo2() throws Exception {
-        MockEndpoint resultEndpoint = getMockEndpoint("mock:foo2");
+        MockEndpoint mockEndPoint = getMockEndpoint("mock:foo2");
 
-        resultEndpoint.expectedMessageCount(2);
-        resultEndpoint.expectedBodiesReceived("Bye World", "Bye World");
-        resultEndpoint.allMessages().body().contains("Bye World");
-        resultEndpoint.allMessages().headers().isNotNull();
+        mockEndPoint.expectedMessageCount(2);
+        mockEndPoint.expectedBodiesReceived("Bye World", "Bye World");
+        mockEndPoint.allMessages().body().contains("Bye World");
+        mockEndPoint.allMessages().headers().isNotNull();
 
         template.sendBody("direct:start2", "Hello World");
         template.sendBody("direct:start2", "Hate World");
 
         // now lets assert that the mock:foo2 endpoint received 2 messages
-        resultEndpoint.assertIsSatisfied();
+        mockEndPoint.assertIsSatisfied();
 
-        List<Exchange> exchangeList = resultEndpoint.getExchanges();
+        List<Exchange> exchangeList = mockEndPoint.getExchanges();
         assertEquals(2, exchangeList.size());
 
         assertTrue(exchangeList.get(0).getIn().getHeaders().containsKey("breadcrumbId"));
