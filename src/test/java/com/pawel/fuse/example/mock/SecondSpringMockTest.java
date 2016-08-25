@@ -27,6 +27,9 @@ public class SecondSpringMockTest extends CamelSpringTestSupport {
 
         mockFinish.expectedMessageCount(3);
         mockFinish.expectedBodiesReceived("Funny World", "First Value", "Second Value");
+        //or in any order
+        //mockFinish.expectedBodiesReceivedInAnyOrder("First Value", "Second Value", "Funny World");
+
         mockFirst.expectedMessageCount(1);
         mockFirst.expectedBodiesReceived("First Value");
 
