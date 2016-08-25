@@ -109,6 +109,13 @@ public class SecondSpringMockTest extends CamelSpringTestSupport {
         assertTrue(exchangeList.get(0).getIn().getBody(String.class).contains("Hello World"));
         assertTrue(exchangeList.get(1).getIn().getBody(String.class).contains("Hate World"));
         assertTrue(exchangeList.get(2).getIn().getBody(String.class).contains("Funny World"));
+
+        assertTrue(exchangeList.get(0).getIn().getHeaders().containsKey("myCommand"));
+        assertTrue(exchangeList.get(1).getIn().getHeaders().containsKey("myCommand"));
+        assertTrue(exchangeList.get(2).getIn().getHeaders().containsKey("myCommand"));
+        assertTrue(exchangeList.get(0).getIn().getHeaders().containsValue("firstCommand"));
+        assertTrue(exchangeList.get(1).getIn().getHeaders().containsValue("firstCommand"));
+        assertTrue(exchangeList.get(2).getIn().getHeaders().containsValue("firstCommand"));
     }
 
     @Test
