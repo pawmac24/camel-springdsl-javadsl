@@ -1,14 +1,12 @@
 package com.pawel.fuse.example.router;
 
 import org.apache.camel.spring.SpringRouteBuilder;
-import org.springframework.stereotype.Component;
 
 import static org.apache.camel.model.dataformat.JsonLibrary.Jackson;
 
 /**
  * Created by pmackiewicz on 2016-08-23.
  */
-@Component
 public class CxfRestRouter extends SpringRouteBuilder {
 
     @Override

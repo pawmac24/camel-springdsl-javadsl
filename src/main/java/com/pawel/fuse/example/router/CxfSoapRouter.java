@@ -2,12 +2,10 @@ package com.pawel.fuse.example.router;
 
 import com.pawel.fuse.example.processor.MyProcessor;
 import org.apache.camel.spring.SpringRouteBuilder;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by pmackiewicz on 2016-08-19.
  */
-@Component
 public class CxfSoapRouter extends SpringRouteBuilder {
 
     @Override
