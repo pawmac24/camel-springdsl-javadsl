@@ -8,7 +8,7 @@
 
     <bean id="secondMockRouteBuilder" class="com.pawel.fuse.example.router.SecondMockRouteBuilder"/>
 
-    <camelContext id="fileContext" xmlns="http://camel.apache.org/schema/spring">
+    <camelContext id="secondMockContext" xmlns="http://camel.apache.org/schema/spring">
         <routeBuilder ref="secondMockRouteBuilder" />
     </camelContext>
 
