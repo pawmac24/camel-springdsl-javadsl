@@ -26,9 +26,6 @@ public class SecondSpringMockWithRunnerTest {
     @EndpointInject(uri = "mock:first")
     MockEndpoint mockFirst;
 
-    @EndpointInject(uri = "mock:direct:first")
-    MockEndpoint mockDirectFirst;
-
     @Test
     public void testMockEndpoints() throws Exception {
         mockFinish.expectedMessageCount(3);
