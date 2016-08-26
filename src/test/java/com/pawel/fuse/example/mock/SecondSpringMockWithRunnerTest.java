@@ -1,5 +1,6 @@
 package com.pawel.fuse.example.mock;
 
+import org.apache.camel.CamelContext;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -14,6 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 public class SecondSpringMockWithRunnerTest {
 
     @Autowired
+    private CamelContext context;
+
+    @Autowired
     private ProducerTemplate template;
 
     @EndpointInject(uri = "mock:finish")
@@ -21,6 +25,9 @@ public class SecondSpringMockWithRunnerTest {
 
     @EndpointInject(uri = "mock:first")
     MockEndpoint mockFirst;
+
+    @EndpointInject(uri = "mock:direct:first")
+    MockEndpoint mockDirectFirst;
 
     @Test
     public void testMockEndpoints() throws Exception {
@@ -37,11 +44,10 @@ public class SecondSpringMockWithRunnerTest {
         template.sendBodyAndHeader("direct:start", "Hate World", "myCommand", "secondCommand");
 
         // now lets assert that the mock:xxx endpoint received yyy messages
-        mockFirst.assertIsSatisfied();
-        mockFinish.assertIsSatisfied();
+        //mockFirst.assertIsSatisfied();
+        //mockFinish.assertIsSatisfied();
 
         //or use this for all mock endpoints
-        //assertMockEndpointsSatisfied();
+        MockEndpoint.assertIsSatisfied(context);
     }
-
 }
